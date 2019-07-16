@@ -1,5 +1,28 @@
 import os
 import re
+import pandas as pd
+import numpy as np
+
+def longest_ele(l, size):
+    # return longest length of element
+    leng = []
+    for i in range(size):
+        leng.append(len(l[i]))
+    return max(leng)
+
+def convert2df(l, max_length):
+    # convert array to dataframe
+    # title of dataframe
+    col = ["usrname", "PID"]
+    index = 2
+    while index < max_length:
+        col.append("logging since/idle for/using")
+        index += 1
+    for i in range(len(l)):
+        while len(l[i]) != max_length:
+            l[i].append("x")
+    df = pd.DataFrame(np.array(l), columns=col)
+    return df
 
 def online_usr():
     cmd = "w"
@@ -14,6 +37,9 @@ def online_usr():
         l[i][3] = usr[i+2].split()[5]  # use what
     return l
 
+def write2file(result):
+    result.to_csv(r"./report/user.csv")
+
 def listuser():
     cmd = "dscl . list /Users UniqueID"
     usr = os.popen(cmd).readlines()
@@ -23,14 +49,12 @@ def listuser():
         l[i][0] = re.split(r"\W+", usr[i])[0]  # usrname
         l[i][1] = re.split(r"\W+", usr[i])[1]  # PID
     online_usr_list = online_usr()
-    write_path = "./report/usr.txt"
-    f = open(write_path, "w", encoding="utf-8")
     for i in range(usr_size):
-        f.write("username: " + l[i][0] + " with PID: " + l[i][1])
         for j in range(len(online_usr_list)):
             if l[i][0] == online_usr_list[j][0]:
-                f.write("\n")
-                f.write("|___ still login since " + online_usr_list[j][1] + ", idle for " + online_usr_list[j][2] + ", and using " + online_usr_list[j][3])
-        f.write("\n")
-    f.close()
-    return l
+                # still login since / idle for / using what
+                l[i].append(online_usr_list[j][1] + "/" + online_usr_list[j][2] + "/" + online_usr_list[j][3])
+    max_length = longest_ele(l, usr_size)
+    result = convert2df(l, max_length)
+    write2file(result)
+    return result

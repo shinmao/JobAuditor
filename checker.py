@@ -7,8 +7,13 @@ def main():
     while mode != "x":
         if mode == "a":
             user.listuser()
-            print("You can find the report in /report/usr.txt now!!")
+            print("You can find the report in /report/user.csv now!!")
             print("Please check whether there is a strange username.")
+        if mode == "b":
+            launchd.listjob()
+            print("You can find the report in /report/job.csv now!!")
+            print("Please check whether there is a strange job.")
+        mode = input("Which mode do you want? ")
 
 if __name__ == "__main__":
     main()
