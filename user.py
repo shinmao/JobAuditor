@@ -38,7 +38,7 @@ def online_usr():
     return l
 
 def write2file(result):
-    result.to_csv(r"./report/user.csv")
+    result.to_csv(r"../report/user.csv")
 
 def listuser():
     cmd = "dscl . list /Users UniqueID"

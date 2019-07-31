@@ -7,7 +7,7 @@ import plistlib
 def convert2df(result):
     col = ["Path", "Label", "Daemon/Agent", "Program", "Argument", "maxCPU", "UserName", "GroupName", "Permission(8)"]
     df = pd.DataFrame(np.array(result), columns=col)
-    df.to_csv(r"./report/job.csv")
+    df.to_csv(r"../report/job.csv")
 
 def complete_path(path, parentdir):
     return parentdir + "/" + path
@@ -42,7 +42,7 @@ def appendProfile(path, job_kind, data):
     
 def listjob():
     service = []
-    # agent
+    # agent launching on user login
     usr_agent_path = os.path.expanduser("~/Library/LaunchAgents")
     usr_agent= os.listdir(usr_agent_path)
     for i in range(len(usr_agent)):
@@ -51,7 +51,7 @@ def listjob():
         data = parsePlist(path)
         profile1 = appendProfile(path, job_kind, data)
         service.append(profile1)
-    # agent
+    # agent launching on user login
     glob_agent_path = "/Library/LaunchAgents"
     glob_agent= os.listdir(glob_agent_path)
     for i in range(len(glob_agent)):
@@ -60,7 +60,7 @@ def listjob():
         data = parsePlist(path)
         profile2 = appendProfile(path, job_kind, data)
         service.append(profile2)
-    # daemon
+    # daemon running on startup
     glob_daemon_path = "/Library/LaunchDaemons"
     glob_daemon = os.listdir(glob_daemon_path)
     for i in range(len(glob_daemon)):
@@ -69,7 +69,7 @@ def listjob():
         data = parsePlist(path)
         profile3 = appendProfile(path, job_kind, data)
         service.append(profile3)
-    # agent
+    # agent launching on user login
     sys_agent_path = "/System/Library/LaunchAgents"
     sys_agent = os.listdir(sys_agent_path)
     for i in range(len(sys_agent)):
@@ -78,7 +78,7 @@ def listjob():
         data = parsePlist(path)
         profile4 = appendProfile(path, job_kind, data)
         service.append(profile4)
-    # daemon
+    # daemon running on startup
     sys_daemon_path = "/System/Library/LaunchDaemons"
     sys_daemon = os.listdir(sys_daemon_path)
     for i in range(len(sys_daemon)):
