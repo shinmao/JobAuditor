@@ -7,7 +7,7 @@ import plistlib
 def convert2df(result):
     col = ["Path", "Label", "Daemon/Agent", "Program", "Argument", "maxCPU", "UserName", "GroupName", "Permission(8)"]
     df = pd.DataFrame(np.array(result), columns=col)
-    df.to_csv(r"../report/job.csv")
+    df.to_csv(r"./report/job.csv")
 
 def complete_path(path, parentdir):
     return parentdir + "/" + path
@@ -39,7 +39,7 @@ def appendProfile(path, job_kind, data):
     profile.append(data[5])
     profile.append(data[6])
     return profile
-    
+
 def listjob():
     service = []
     # agent launching on user login
