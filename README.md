@@ -27,3 +27,6 @@ This option is used to list the all daemons and agents on current machine includ
 [OSX 10.10 /System/Library/LaunchDaemons/](http://cirrusj.github.io/Yosemite-Stop-Launch/)  
 Even this is for Lion version, it is still worthy of refering to.  
 Please work with `$ lsappinfo list`.  
+
+### In next step of goal
+I wish to set up a dictionary of launchd service on OSX mojave. It must be better to use dictionary to focus on the most suspicious one.
